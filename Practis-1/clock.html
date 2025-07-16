@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Analog Clock </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #c2e9fb, #a1c4fd);
+            height: 100vh;
+            font-family: sans-serif;
+        }
+
+        .clock {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: rotate(0deg);
+            border-radius: 6px;
+        }
+
+        .hour {
+            width: 6px;
+            height: 70px;
+            background: #333;
+            z-index: 3;
+        }
+
+        .minute {
+            width: 4px;
+            height: 100px;
+            background: #444;
+            z-index: 2;
+        }
+
+        .second {
+            width: 2px;
+            height: 120px;
+            background: crimson;
+            z-index: 1;
+        }
+
+        .center-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 14px;
+            height: 14px;
+            background: #111;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        .mark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #222;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .mark12 {
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .mark3 {
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .mark6 {
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .mark9 {
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+
+<body class="d-flex justify-content-center align-items-center">
+    <div class="clock d-flex justify-content-center align-items-center">
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+        <div class="center-dot"></div>
+        <div class="mark mark12"></div>
+        <div class="mark mark3"></div>
+        <div class="mark mark6"></div>
+        <div class="mark mark9"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            const secondDeg = seconds * 6;
+            const minuteDeg = minutes * 6 + seconds * 0.1;
+            const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+
+            document.getElementById("second").style.transform = `rotate(${secondDeg}deg)`;
+            document.getElementById("minute").style.transform = `rotate(${minuteDeg}deg)`;
+            document.getElementById("hour").style.transform = `rotate(${hourDeg}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
