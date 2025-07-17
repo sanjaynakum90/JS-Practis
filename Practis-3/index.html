@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do with Filters</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: #f0f8ff;
+            padding: 40px;
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: #fff;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .filter-btn.active {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">📋 To-Do List with Filters</h2>
+        <form id="taskForm" class="mb-3 d-flex gap-3">
+            <input type="text" id="taskInput" class="form-control" placeholder="Enter task..." required />
+            <button type="submit" class="btn btn-primary">Add Task</button>
+        </form>
+
+        <div class="mb-4 d-flex gap-3">
+            <button class="btn btn-outline-secondary filter-btn active" data-filter="all">All</button>
+            <button class="btn btn-outline-success filter-btn" data-filter="completed">Completed</button>
+            <button class="btn btn-outline-warning filter-btn" data-filter="pending">Pending</button>
+        </div>
+
+        <div id="taskList"></div>
+    </div>
+
+    <script>
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        let currentFilter = "all";
+
+        function displayTasks() {
+            const taskList = document.getElementById("taskList");
+            taskList.innerHTML = "";
+
+            const filteredTasks = tasks.filter(task => {
+                if (currentFilter === "completed") return task.done;
+                if (currentFilter === "pending") return !task.done;
+                return true;
+            });
+
+            filteredTasks.forEach((task, index) => {
+                const taskDiv = document.createElement("div");
+                taskDiv.className = "task";
+                if (task.done) taskDiv.classList.add("completed");
+
+                taskDiv.innerHTML = `
+          <span>${task.text}</span>
+          <div>
+            <button class="btn btn-sm btn-${task.done ? "secondary" : "success"} me-2" onclick="toggleStatus(${index})">
+              ${task.done ? "Undo" : "Done"}
+            </button>
+            <button class="btn btn-sm btn-danger" onclick="deleteTask(${index})">Delete</button>
+          </div>
+        `;
+                taskList.appendChild(taskDiv);
+            });
+        }
+
+        function toggleStatus(index) {
+            tasks[index].done = !tasks[index].done;
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            displayTasks();
+        }
+
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            displayTasks();
+        }
+
+        document.getElementById("taskForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const input = document.getElementById("taskInput");
+            const text = input.value.trim();
+            if (text) {
+                tasks.push({ text, done: false });
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+                input.value = "";
+                displayTasks();
+            }
+        });
+
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentFilter = btn.dataset.filter;
+                displayTasks();
+            });
+        });
+
+        displayTasks(); // Initial display
+    </script>
+</body>
+
+</html>
