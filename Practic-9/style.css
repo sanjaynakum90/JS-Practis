@@ -1,0 +1,16 @@
+body {
+      background: linear-gradient(to right, #fceabb, #f8b500);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .timer-box {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .countdown {
+      display: flex;
+      justify-content: space-around;
+      font-size: 2rem;
+      margin-top: 20px;
+    }
