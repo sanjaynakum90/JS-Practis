@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
+
+
+    <div class="container mx-auto shadow mt-3 p-4 " style="background-color: #EBE8DB;">
+        <h2 class="text-center">Products Information</h2>
+        <input type="text" placeholder="enter products img sorce" id="img" class="form-control  mb-3 border "
+            style="border-color: EBE8DB;">
+        <input type="text" placeholder="enter products Name" id="name" class="form-control  mb-3 border "
+            style="border-color: EBE8DB;">
+        <input type="text" placeholder="enter products price" id="price" class="form-control  mb-3 border "
+            style="border-color: EBE8DB;">
+        <input type="text" placeholder="enter products categoery" id="rate" class="form-control  mb-3 border "
+            style="border-color: EBE8DB;">
+
+        <div class="d-grid gap-2 col-6 mx-auto ">
+            <button class="btn btn-primary rounded-5" onclick="add()">Add</button>
+        </div>
+    </div>
+
+
+
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 gx-0 gy-3 mt-5" id="show">
+
+        </div>
+    </div>
+
+</body>
+<script src="./script.js"></script>
+
+</html>
