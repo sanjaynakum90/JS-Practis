@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Management System</title>
+
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="fonts/remixicon.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+
+<body style="background-color: #FFF3D9">
+    <div class="container my-5  ">
+        <div class="row">
+            <div class="col-12 border border-black shadow-lg rounded-3 bg-white">
+                <h1 class="">Task Management System</h1>
+                <div class="">
+                    <form id="taskForm" class="mb-5"><br>
+                        <input type="text" id="title" placeholder="Title" class="mb-3" required /><br>
+                        <textarea id="description" placeholder="Description" class="mb-3"></textarea><br>
+                        <input type="date" id="dueDate" class="mb-3" required /><br>
+                        <select id="priority" class="mb-3"><br>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select><br>
+                        <button type="submit" class="btn btn-secondary text-white"><i class="ri-add-line"></i>Add
+                            Task</button>
+                    </form>
+
+                    <div>
+                        <label class="mb-3">Filter by Priority:</label>
+                        <select id="filterpriority" class="">
+                            <option value="all">All</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+
+                    <ul id="taskList" class="mb-5"></ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
