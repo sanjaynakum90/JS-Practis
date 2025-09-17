@@ -1,4 +1,4 @@
-const apiKey = "YOUR_NEWSAPI_KEY";
+const apiKey = "90df1c01fce94bacab261c3679d521a8";
 document.getElementById("fetchBtn").addEventListener("click", fetchNews);
 
 async function fetchNews() {
@@ -13,7 +13,7 @@ async function fetchNews() {
     await new Promise(resolve => setTimeout(resolve, 100));
 
     try {
-        const response = await fetch(`https://newsapi.org/v2/everything?q=Apple&from=2025-09-08&sortBy=${category}&apiKey=90df1c01fce94bacab261c3679d521a8`);
+        const response = await fetch(`https://newsapi.org/v2/everything?q=Apple&sortBy=${category}&apiKey=${apiKey}`);
         const data = await response.json();
 
         if (data.status !== "ok" || !data.articles.length) {
