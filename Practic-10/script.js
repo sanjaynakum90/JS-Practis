@@ -1,108 +1,32 @@
-let show = document.getElementById("show")
-
-let arr = JSON.parse(localStorage.getItem("arr")) || []
-
-showItem(arr)
-
-
-
-function setLocal(array) {
-    localStorage.setItem("arr", JSON.stringify(array))
-
-    showItem(arr)
-    location.reload()
-}
-
-
-let name = document.getElementById("name")
-let price = document.getElementById("price")
-let rate = document.getElementById("rate")
-let img = document.getElementById("img")
-
-function add() {
-    let obj = {
-        id: Math.round(Math.random() * 10000),
-
-        name: name.value,
-        price: price.value,
-        rate: rate.value,
-        img: img.value
-
-    }
-
-    if (img.name != "") {
-        let newArr = arr.map((ele) => {
-            if (ele.id == img.name) {
-                ele = obj;
-            }
-            return ele;
-        })
-        setLocal(newArr)
-    }
-    else {
-        arr.push(obj)
-
-        setLocal(arr)
-    }
-
-
-    location.reload()
-
-}
-
-
-function del(id) {
-    let newarr = arr.filter((ele) => ele.id != id)
-
-    setLocal(newarr)
-    location.reload()
-}
-
-
-function edit(id) {
-    let newObj = arr.find((ele) => ele.id == id)
-    console.log(newObj)
-    img.value = newObj.img
-    name.value = newObj.name
-    price.value = newObj.price
-    rate.value = newObj.rate
-    img.name = id;
-}
-
 function showItem() {
     show.innerHTML = ""
     arr.map((ele) => {
         const card = `
- <div class="col">
-  <div class="card position-relative" style="width: 18rem;">
-    <button onclick="del(${ele.id})" class="position-absolute rounded-circle btn-danger btn" style="right:10px; top:10px"><i class="ri-delete-bin-5-line"></i></button>
-    <img src="${ele.img}" class="card-img-top img-fluid" width="70%" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">${ele.name}</h5>
-      <p class="card-text">${ele.price}</p>
-      <p class="card-text">${ele.rate}</p>
-      <a onclick="edit(${ele.id})" class="btn btn-primary btn-sm"><i class="ri-edit-2-line"></i></a>
-           <button class="btn btn-secondary btn-sm w-50">More</button>
-    </div>
-  </div>
-
-</div>
-`
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg transform transition-all hover:shadow-2xl hover:-translate-y-2">
+                        <div class="relative">
+                            <button onclick="del(${ele.id})" 
+                                class="absolute right-3 top-3 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transform transition-all hover:scale-110">
+                                <i class="ri-delete-bin-5-line"></i>
+                            </button>
+                            <img src="${ele.img}" class="h-48 w-full object-cover" alt="${ele.name}">
+                        </div>
+                        <div class="p-5">
+                            <h5 class="text-xl font-bold text-gray-800 mb-2">${ele.name}</h5>
+                            <p class="text-blue-600 font-bold text-lg mb-2">$${ele.price}</p>
+                            <p class="text-gray-600 mb-4">${ele.rate}</p>
+                            <div class="flex justify-between gap-2">
+                                <button onclick="edit(${ele.id})" 
+                                    class="flex items-center px-4 py-2 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all">
+                                    <i class="ri-edit-2-line mr-1"></i>Edit
+                                </button>
+                                <button 
+                                    class="flex items-center px-4 py-2 border-2 border-gray-600 text-gray-600 rounded-lg hover:bg-gray-600 hover:text-white transition-all">
+                                    <i class="ri-information-line mr-1"></i>Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `
         show.innerHTML += card
-
     })
-
-}
-
-
-function low() {
-    let newData = data.sort((a, b) => a.price - b.price)
-
-    showItem(newData)
-}
-
-
-function high() {
-    let newData = data.sort((a, b) => b.price - a.price)
-    showItem(newData)
 }
