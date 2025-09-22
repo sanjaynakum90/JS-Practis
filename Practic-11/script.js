@@ -12,13 +12,13 @@ function local() {
 }
 
 function addTask() {
-    let title = document.getElementById("title").value
-    let description = document.getElementById("description").value
-    let dueDate = document.getElementById("dueDate").value
-    let priority = document.getElementById("priority").value
+    let title = document.getElementById("title").value;
+    let description = document.getElementById("description").value;
+    let dueDate = document.getElementById("dueDate").value;
+    let priority = document.getElementById("priority").value;
 
     if (!title || !dueDate) {
-        alert("Title and due date both are required.");
+        alert("Title and due date are required!");
         return;
     }
 
@@ -36,26 +36,47 @@ function addTask() {
     document.getElementById("taskForm").reset();
 }
 
+function getPriorityClass(priority) {
+    const classes = {
+        low: "bg-green-100 border-green-200",
+        medium: "bg-yellow-100 border-yellow-200",
+        high: "bg-red-100 border-red-200"
+    };
+    return classes[priority] || "bg-gray-100";
+}
+
 function displayTasks() {
     let list = document.getElementById("taskList");
     list.innerHTML = "";
 
     let filter = document.getElementById("filterpriority").value;
-    let filtertask = filter === "all" ? tasks : tasks.filter(task => task.priority === filter);
+    let filteredTasks = filter === "all" ? tasks : tasks.filter(task => task.priority === filter);
 
-    filtertask.map(task => {
+    filteredTasks.forEach(task => {
         let li = document.createElement("li");
-        li.className = `task ${task.priority}`;
+        li.className = `${getPriorityClass(task.priority)} p-4 rounded-lg border-2 transition duration-200 hover:shadow-md`;
         li.innerHTML = `
-      <strong>${task.title}</strong> (${task.priority})<br/>
-      ${task.description ? `<p>${task.description}</p>` : ""}
-      <small>Due date: ${task.dueDate}</small> 
-      <div class="m-2">
-        <button onclick="editTask(${task.id})" class="btn btn-outline-secondary me-2 text-dark"><i class="ri-edit-line"></i>Edit</button>
-        <button onclick="deleteTask(${task.id})" class="btn btn-outline-secondary text-dark"><i class="ri-delete-bin-6-line"></i>Delete</button>
-      </div>
-     
-    `;
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold text-lg">${task.title}</h3>
+                            <span class="inline-block px-2 py-1 text-sm rounded-full ${getPriorityClass(task.priority)} mt-1">
+                                ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                            </span>
+                            ${task.description ? `<p class="text-gray-600 mt-2">${task.description}</p>` : ""}
+                            <p class="text-sm text-gray-500 mt-2">Due: ${task.dueDate}</p>
+                        </div>
+                        <div class="space-x-2">
+                            <button onclick="editTask(${task.id})" 
+                                class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteTask(${task.id})" 
+                                class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
         list.appendChild(li);
     });
 }
@@ -67,8 +88,6 @@ function deleteTask(id) {
 }
 
 function editTask(id) {
-
-
     let task = tasks.find(t => t.id === id);
     if (!task) return;
 
@@ -79,4 +98,5 @@ function editTask(id) {
 
     deleteTask(id);
 }
+
 window.onload = displayTasks;
